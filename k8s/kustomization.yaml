@@ -12,7 +12,7 @@ generatorOptions:
 configMapGenerator:
   - name: webapp-config
     literals:
-      - MESSAGE=Kazkoks Blogas Testas!!!
+      - MESSAGE=Testuojam Harbor + ArgoCD veikima !!!!
       - PORT=8080
 
 images:
