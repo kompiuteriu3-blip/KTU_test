@@ -5,12 +5,7 @@ resources:
   - deployment.yaml
   - service.yaml
   - httproute.yaml
-
-configMapGenerator:
-  - name: webapp-config
-    literals:
-      - MESSAGE=Welcome to TestApp 🎉 — GitOps via ArgoCD + Cilium Gateway
-      - PORT=8080
+  - configmap.yaml
 
 images:
   - name: harbor.apps.kubernetes-okd.digidefence.ktu.edu/library/webapp
