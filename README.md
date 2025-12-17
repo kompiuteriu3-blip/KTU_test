@@ -8,7 +8,7 @@ Minimalus Node.js (Express) + Kustomize. `Argo CD` automatiškai sinchronizuoja 
 ## Sukūrimas ir įkėlimas į Harbor
 ```powershell
 docker login harbor.apps.kubernetes-okd.digidefence.ktu.edu -u <vartotojas> -p "<slaptažodis>"
-$TAG="0.1.5"
+$TAG="0.1.6"
 $IMAGE="harbor.apps.kubernetes-okd.digidefence.ktu.edu/library/webapp:$TAG"
 docker build -t $IMAGE .
 docker push $IMAGE

@@ -16,7 +16,7 @@ app.get('/', (req, res) => {
         body { display: flex; align-items: center; justify-content: center; background: #0b0f19; color: #fff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; }
         .center { text-align: center; }
         .title { font-size: 4rem; font-weight: 800; letter-spacing: 0.02em; }
-        .subtitle { margin-top: 1rem; font-size: 1rem; opacity: 0.8; }
+        .subtitle { margin-top: 1rem; font-size: 1.6rem; font-weight: 600; opacity: 0.9; }
       </style>
     </head>
     <body>
