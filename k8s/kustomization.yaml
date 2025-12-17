@@ -12,7 +12,7 @@ generatorOptions:
 configMapGenerator:
   - name: webapp-config
     literals:
-      - MESSAGE=Kazkoks Testas
+      - MESSAGE=Kazkoks Testas Naujas !!!
       - PORT=8080
 
 images:
