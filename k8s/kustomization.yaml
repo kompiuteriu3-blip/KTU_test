@@ -18,4 +18,4 @@ configMapGenerator:
 images:
   - name: harbor.apps.kubernetes-okd.digidefence.ktu.edu/library/webapp
     newName: harbor.apps.kubernetes-okd.digidefence.ktu.edu/library/webapp
-    newTag: 0.1.5
+    newTag: 0.1.6
