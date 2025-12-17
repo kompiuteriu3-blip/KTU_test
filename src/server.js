@@ -22,8 +22,27 @@ app.get('/', (req, res) => {
     <body>
       <div class="center">
         <div class="title">${message}</div>
-        <div class="subtitle">${new Date().toLocaleString()}</div>
+        <div class="subtitle" id="local-time"></div>
       </div>
+      <script>
+        (function() {
+          function renderLocalTime() {
+            var el = document.getElementById('local-time');
+            if (!el) return;
+            var now = new Date();
+            try {
+              el.textContent = now.toLocaleString(navigator.language || undefined, {
+                year: 'numeric', month: '2-digit', day: '2-digit',
+                hour: '2-digit', minute: '2-digit', second: '2-digit'
+              });
+            } catch (e) {
+              el.textContent = now.toString();
+            }
+          }
+          renderLocalTime();
+          setInterval(renderLocalTime, 1000);
+        })();
+      </script>
     </body>
   </html>`;
   res.setHeader('Content-Type', 'text/html; charset=utf-8');
