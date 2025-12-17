@@ -26,18 +26,27 @@ app.get('/', (req, res) => {
       </div>
       <script>
         (function() {
+          function pad(n){ return String(n).padStart(2,'0'); }
+          function tzShort(date){
+            try {
+              var parts = new Intl.DateTimeFormat(navigator.language || undefined, { timeZoneName: 'short' }).formatToParts(date);
+              var tz = parts.find(function(p){ return p.type === 'timeZoneName'; });
+              return tz && tz.value ? tz.value : Intl.DateTimeFormat().resolvedOptions().timeZone;
+            } catch(e) {
+              return Intl.DateTimeFormat().resolvedOptions().timeZone;
+            }
+          }
           function renderLocalTime() {
             var el = document.getElementById('local-time');
             if (!el) return;
             var now = new Date();
-            try {
-              el.textContent = now.toLocaleString(navigator.language || undefined, {
-                year: 'numeric', month: '2-digit', day: '2-digit',
-                hour: '2-digit', minute: '2-digit', second: '2-digit'
-              });
-            } catch (e) {
-              el.textContent = now.toString();
-            }
+            var y = now.getFullYear();
+            var m = pad(now.getMonth()+1);
+            var d = pad(now.getDate());
+            var h = pad(now.getHours());
+            var mi = pad(now.getMinutes());
+            var s = pad(now.getSeconds());
+            el.textContent = y+"-"+m+"-"+d+" "+h+":"+mi+":"+s+" "+tzShort(now);
           }
           renderLocalTime();
           setInterval(renderLocalTime, 1000);
