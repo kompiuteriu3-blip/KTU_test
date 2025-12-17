@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp
+  labels:
+    app: webapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webapp
+  template:
+    metadata:
+      labels:
+        app: webapp
+    spec:
+      imagePullSecrets:
+        - name: harbor-creds
+      containers:
+        - name: webapp
+          image: harbor.apps.kubernetes-okd.digidefence.ktu.edu/library/webapp:0.1.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8080
+          env:
+            - name: PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: webapp-config
+                  key: PORT
+            - name: MESSAGE
+              valueFrom:
+                configMapKeyRef:
+                  name: webapp-config
+                  key: MESSAGE
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 3
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 20

@@ -1,0 +1,13 @@
+namespace: webapp
+
+resources:
+  - namespace.yaml
+  - deployment.yaml
+  - service.yaml
+  - configmap.yaml
+  - httproute.yaml
+
+images:
+  - name: harbor.apps.kubernetes-okd.digidefence.ktu.edu/library/webapp
+    newName: harbor.apps.kubernetes-okd.digidefence.ktu.edu/library/webapp
+    newTag: 0.1.0
