@@ -10,7 +10,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://git.example.com/your/repo.git
+    repoURL: https://github.com/kompiuteriu3-blip/KTU_test.git
     targetRevision: main
     path: k8s
   destination:
