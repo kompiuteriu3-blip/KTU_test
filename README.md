@@ -1,56 +1,39 @@
-# TestApp Web — Minimal GitOps with Argo CD + Cilium
+# TestApp — paprasta GitOps žiniatinklio programa
 
-Minimal Express app + single Kustomize folder so changes are easy and Argo CD can auto-pick updates.
+Minimalus Node.js (Express) + Kustomize. `Argo CD` automatiškai sinchronizuoja pakeitimus iš Git. Išorinis srautas nukreipiamas per `Cilium Gateway` (HTTPRoute).
 
-## App
-- Endpoint `/` returns JSON with message + timestamp
-- Config via env vars: `MESSAGE`, `PORT` (default 8080)
+## Ką daro
+- Pagrindinis puslapis (`/`) rodo dideles raides su `MESSAGE` centre.
+- Yra `GET /api` (JSON) ir `GET /healthz` (sveikatos patikra).
+- Konfigūracija per `configMapGenerator` (`k8s/kustomization.yaml`), raktai: `MESSAGE`, `PORT`.
 
-## Build and Push (Harbor)
-Use `harbor.apps.kubernetes-okd.digidefence.ktu.edu` and set `<password>`.
-
+## Sukūrimas ir įkėlimas į Harbor
 ```powershell
-docker login harbor.apps.kubernetes-okd.digidefence.ktu.edu -u admin -p "<password>"
-$IMAGE="harbor.apps.kubernetes-okd.digidefence.ktu.edu/library/webapp:0.1.0"
+docker login harbor.apps.kubernetes-okd.digidefence.ktu.edu -u <vartotojas> -p "<slaptažodis>"
+$TAG="0.1.3"
+$IMAGE="harbor.apps.kubernetes-okd.digidefence.ktu.edu/library/webapp:$TAG"
 docker build -t $IMAGE .
 docker push $IMAGE
 ```
 
-## Kubernetes (once)
-Create namespace and registry secret, then apply Kustomize.
-
+## Pradinis paleidimas (Kubernetes + Argo CD)
 ```powershell
+# Sukurti namespace ir registry secret
 kubectl create namespace webapp
-kubectl create secret docker-registry harbor-creds -n webapp --docker-server=https://harbor.apps.kubernetes-okd.digidefence.ktu.edu --docker-username=admin --docker-password="<password>" --docker-email="admin@example.com"
-kubectl apply -k .\k8s
-kubectl -n webapp get deploy,svc,httproute
-```
+kubectl -n webapp create secret docker-registry harbor-creds --docker-server=https://harbor.apps.kubernetes-okd.digidefence.ktu.edu --docker-username=<vartotojas> --docker-password "<slaptažodis>" --docker-email "admin@example.com"
 
-HTTPRoute (`k8s/httproute.yaml`) references Cilium Gateway `apps-gw` in namespace `apps-gateway` and exposes hostname `webapp.apps.kubernetes-okd.digidefence.ktu.edu`.
-
-## Argo CD (GitOps)
-Point `argocd/application.yaml` to your Git repo (`repoURL`) and path `k8s`. It includes annotations for Argo CD Image Updater to auto-bump image tags when new versions appear in Harbor.
-
-```powershell
+# Užregistruoti Argo CD aplikaciją
 kubectl apply -f .\argocd\application.yaml
-kubectl -n argocd get applications webapp
+
+# Patikrinti resursus
+kubectl -n webapp get deploy,svc
 ```
 
-### Auto-update flow
-1. You change code and push a new image to Harbor (e.g., `0.1.1`).
-2. Argo CD Image Updater detects the new tag and writes it back to `k8s/kustomization.yaml`.
-3. Argo CD sees the manifest change and syncs the deployment.
 
-> Note: Ensure Argo CD Image Updater is installed in your cluster and configured to access Harbor.
+## Kaip keisti pranešimą (auto-perdiegimas)
+- Redaguokite `k8s/kustomization.yaml` dalį `configMapGenerator` ir pakeiskite `MESSAGE` reikšmę.
+- Commit + push į Git — `Argo CD` aptiks pakeitimą ir automatiškai atnaujins pod.
 
-## Local Dev
-```powershell
-npm install
-$env:MESSAGE = "Hello local!"; $env:PORT = "8080"; npm start
-# Visit http://localhost:8080
-```
-
-## Where to edit
-- App: `src/server.js` (business logic)
-- Config: `k8s/configmap.yaml` (`MESSAGE`, `PORT`)
-- Image tag (managed by Image Updater): `k8s/kustomization.yaml`
+## Kaip atnaujinti conteineri (tag)
+- Pakeiskite `images` → `newTag` `k8s/kustomization.yaml` faile į naują `$TAG`.
+- Commit + push — `Argo CD` sinchronizuos naują versiją.
