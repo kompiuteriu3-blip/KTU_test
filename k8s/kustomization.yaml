@@ -4,8 +4,13 @@ resources:
   - namespace.yaml
   - deployment.yaml
   - service.yaml
-  - configmap.yaml
   - httproute.yaml
+
+configMapGenerator:
+  - name: webapp-config
+    literals:
+      - MESSAGE=Hello from TestApp via Kubernetes!
+      - PORT=8080
 
 images:
   - name: harbor.apps.kubernetes-okd.digidefence.ktu.edu/library/webapp
