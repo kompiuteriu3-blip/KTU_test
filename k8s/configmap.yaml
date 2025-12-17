@@ -5,5 +5,5 @@ metadata:
   labels:
     app: webapp
 data:
-  MESSAGE: "Testuojam ArgoCD veikima"
+  MESSAGE: "Testuojam ArgoCD veikimaaaaa"
   PORT: "8080"
