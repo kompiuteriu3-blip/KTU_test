@@ -9,7 +9,7 @@ resources:
 configMapGenerator:
   - name: webapp-config
     literals:
-      - MESSAGE=Hello from TestApp via Kubernetes!
+      - MESSAGE=Welcome to TestApp 🎉 — GitOps via ArgoCD + Cilium Gateway
       - PORT=8080
 
 images:
