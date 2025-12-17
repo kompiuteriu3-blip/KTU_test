@@ -1,10 +1,8 @@
-# TestApp — paprasta GitOps žiniatinklio programa
+# TestApp — paprasta GitOps programa
 
 Minimalus Node.js (Express) + Kustomize. `Argo CD` automatiškai sinchronizuoja pakeitimus iš Git. Išorinis srautas nukreipiamas per `Cilium Gateway` (HTTPRoute).
 
-## Ką daro
-- Pagrindinis puslapis (`/`) rodo dideles raides su `MESSAGE` centre.
-- Yra `GET /api` (JSON) ir `GET /healthz` (sveikatos patikra).
+## Tekstas keiciamas per
 - Konfigūracija per `configMapGenerator` (`k8s/kustomization.yaml`), raktai: `MESSAGE`, `PORT`.
 
 ## Sukūrimas ir įkėlimas į Harbor
