@@ -5,7 +5,15 @@ resources:
   - deployment.yaml
   - service.yaml
   - httproute.yaml
-  - configmap.yaml
+
+generatorOptions:
+  disableNameSuffixHash: false
+
+configMapGenerator:
+  - name: webapp-config
+    literals:
+      - MESSAGE=Testuojam ArgoCD
+      - PORT=8080
 
 images:
   - name: harbor.apps.kubernetes-okd.digidefence.ktu.edu/library/webapp
