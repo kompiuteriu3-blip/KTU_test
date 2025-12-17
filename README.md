@@ -20,7 +20,7 @@ docker push $IMAGE
 kubectl create namespace webapp
 kubectl -n webapp create secret docker-registry harbor-creds --docker-server=https://harbor.apps.kubernetes-okd.digidefence.ktu.edu --docker-username=<vartotojas> --docker-password "<slaptažodis>" --docker-email "admin@example.com"
 
-# Užregistruoti Argo CD aplikaciją
+# Užregistruoti ArgoCD aplikaciją
 kubectl apply -f .\argocd\application.yaml
 
 # Patikrinti resursus
