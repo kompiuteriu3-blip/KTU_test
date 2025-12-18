@@ -1,6 +1,6 @@
-# TestApp — paprasta GitOps programa
+# TestApp — GitOps testas
 
-Minimalus Node.js (Express) + Kustomize. `Argo CD` automatiškai sinchronizuoja pakeitimus iš Git. Išorinis srautas nukreipiamas per `Cilium Gateway` (HTTPRoute).
+Node.js (Express) + Kustomize. `Argo CD` automatiškai sinchronizuoja pakeitimus iš Git. Išorinis srautas nukreipiamas per `Cilium Gateway` (HTTPRoute).
 
 ## Teksto pakeitimas
 - Konfigūracija per `configMapGenerator` (`k8s/kustomization.yaml`), raktai: `MESSAGE`, `PORT`.
@@ -8,7 +8,7 @@ Minimalus Node.js (Express) + Kustomize. `Argo CD` automatiškai sinchronizuoja 
 ## Sukūrimas ir įkėlimas į Harbor
 ```powershell
 docker login harbor.apps.kubernetes-okd.digidefence.ktu.edu -u <vartotojas> -p "<slaptažodis>"
-$TAG="0.1.6"
+$TAG="0.1.0"
 $IMAGE="harbor.apps.kubernetes-okd.digidefence.ktu.edu/library/webapp:$TAG"
 docker build -t $IMAGE .
 docker push $IMAGE
@@ -25,6 +25,9 @@ kubectl apply -f .\argocd\application.yaml
 
 # Patikrinti resursus
 kubectl -n webapp get deploy,svc
+
+# Viska ištrinti
+kubectl -n argocd delete application webapp
 ```
 
 
