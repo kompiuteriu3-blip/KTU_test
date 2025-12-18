@@ -3,7 +3,7 @@
 Node.js (Express) + Kustomize. `Argo CD` automatiškai sinchronizuoja pakeitimus iš Git. Išorinis srautas nukreipiamas per `Cilium Gateway` (HTTPRoute).
 
 ## Teksto pakeitimas
-- Konfigūracija per `configMapGenerator` (`k8s/kustomization.yaml`), raktai: `MESSAGE`, `PORT`.
+- Konfigūracija per `configMapGenerator` (`k8s/kustomization.yaml`)
 
 ## Sukūrimas ir įkėlimas į Harbor
 ```powershell
