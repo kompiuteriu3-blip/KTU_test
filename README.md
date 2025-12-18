@@ -24,7 +24,7 @@ kubectl -n webapp create secret docker-registry harbor-creds --docker-server=htt
 kubectl apply -f .\argocd\application.yaml
 
 # Patikrinti resursus
-kubectl -n webapp get deploy,svc
+kubectl -n webapp get all
 
 # Viska ištrinti
 $pf = Join-Path $env:TEMP "finalizer-merge.json"
