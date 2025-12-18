@@ -3,10 +3,6 @@ kind: Application
 metadata:
   name: webapp
   namespace: argocd
-  annotations:
-    argocd-image-updater.argoproj.io/image-list: webapp=harbor.apps.kubernetes-okd.digidefence.ktu.edu/library/webapp
-    argocd-image-updater.argoproj.io/webapp.update-strategy: semver
-    argocd-image-updater.argoproj.io/write-back-method: kustomize
 spec:
   project: default
   source:
