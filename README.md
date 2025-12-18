@@ -38,6 +38,6 @@ kubectl -n argocd delete application webapp
 - Redaguokite `k8s/kustomization.yaml` dalį `configMapGenerator` ir pakeiskite `MESSAGE` reikšmę.
 - Commit + push į Git — `Argo CD` aptiks pakeitimą ir automatiškai atnaujins pod.
 
-## Kaip atnaujinti conteineri (tag)
+## Kaip atnaujinti pasikeitus image tag
 - Pakeiskite `images` → `newTag` `k8s/kustomization.yaml` faile į naują `$TAG`.
 - Commit + push — `Argo CD` sinchronizuos naują versiją.
