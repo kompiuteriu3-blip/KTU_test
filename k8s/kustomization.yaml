@@ -5,6 +5,7 @@ resources:
   - deployment.yaml
   - service.yaml
   - httproute.yaml
+  - hpa.yaml
 
 generatorOptions:
   disableNameSuffixHash: false

@@ -35,9 +35,26 @@ kubectl -n argocd delete application webapp
 
 
 ## Kaip keisti pranešimą (auto-perdiegimas)
-- Redaguokite `k8s/kustomization.yaml` dalį `configMapGenerator` ir pakeiskite `MESSAGE` reikšmę.
-- Commit + push į Git — `Argo CD` aptiks pakeitimą ir automatiškai atnaujins pod.
 
 ## Kaip atnaujinti pasikeitus image tag
-- Pakeiskite `images` → `newTag` `k8s/kustomization.yaml` faile į naują `$TAG`.
-- Commit + push — `Argo CD` sinchronizuos naują versiją.
+
+## Autoskaliavimas (nebūtina)
+- Repo turi `k8s/hpa.yaml` (HPA). Pagal nutylėjimą jis neįjungtas.
+- Įjungti: pridėkite `- hpa.yaml` į `k8s/kustomization.yaml` `resources` sąrašą, tada commit + push.
+
+### Metrics Server
+HPA reikalauja resursų metrikų.
+
+### Apkrovos testas ir stebėjimas
+```powershell
+# Paleisti paprastą apkrovą klasteryje (curl loop)
+kubectl -n webapp run curl --image=curlimages/curl:8.7.1 --restart=Never -- \
+
+
+# Stebėti HPA ir podų skaičių
+kubectl -n webapp get hpa -w
+kubectl -n webapp get pods -w
+
+# Sustabdyti apkrovą
+kubectl -n webapp delete pod curl
+```
