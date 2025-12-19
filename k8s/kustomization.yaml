@@ -13,7 +13,7 @@ generatorOptions:
 configMapGenerator:
   - name: webapp-config
     literals:
-      - MESSAGE=Testuojam!!!
+      - MESSAGE=Testuojam!!!!
       - PORT=8080
 
 images:
