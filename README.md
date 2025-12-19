@@ -51,14 +51,10 @@ HPA reikalauja resursų metrikų.
 # Naudosime viešą busybox vaizdą su /bin/sh + wget begaline kilpa
 kubectl -n webapp run load --image=busybox:1.36 --restart=Never -- /bin/sh -c "while true; do wget -q -O- http://webapp:8080/ > /dev/null; done"
 
-# (Alternatyva) jei Docker Hub blokuojamas, pabandykite alpine
-# kubectl -n webapp run load --image=alpine:3.20 --restart=Never -- /bin/sh -c "while true; do wget -q -O- http://webapp:8080/ > /dev/null; done"
-
-
 # Stebėti HPA ir podų skaičių
 kubectl -n webapp get hpa -w
 kubectl -n webapp get pods -w
 
 # Sustabdyti apkrovą
-kubectl -n webapp delete pod curl
+kubectl -n webapp delete pod load
 ```
