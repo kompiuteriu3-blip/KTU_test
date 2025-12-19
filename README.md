@@ -47,8 +47,12 @@ HPA reikalauja resursų metrikų.
 
 ### Apkrovos testas ir stebėjimas
 ```powershell
-# Paleisti paprastą apkrovą klasteryje (curl loop)
-kubectl -n webapp run curl --image=curlimages/curl:8.7.1 --restart=Never -- \
+# Paleisti paprastą apkrovą klasteryje (be Harbor)
+# Naudosime viešą busybox vaizdą su /bin/sh + wget begaline kilpa
+kubectl -n webapp run load --image=busybox:1.36 --restart=Never -- /bin/sh -c "while true; do wget -q -O- http://webapp:8080/ > /dev/null; done"
+
+# (Alternatyva) jei Docker Hub blokuojamas, pabandykite alpine
+# kubectl -n webapp run load --image=alpine:3.20 --restart=Never -- /bin/sh -c "while true; do wget -q -O- http://webapp:8080/ > /dev/null; done"
 
 
 # Stebėti HPA ir podų skaičių

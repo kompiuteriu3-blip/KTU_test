@@ -5,6 +5,13 @@ metadata:
   namespace: argocd
 spec:
   project: default
+  ignoreDifferences:
+    - group: apps
+      kind: Deployment
+      name: webapp
+      namespace: webapp
+      jsonPointers:
+        - /spec/replicas
   source:
     repoURL: https://github.com/kompiuteriu3-blip/KTU_test.git
     targetRevision: main
